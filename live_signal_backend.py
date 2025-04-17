@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-def import requests
+import requests
 import pandas as pd
 import time
 
