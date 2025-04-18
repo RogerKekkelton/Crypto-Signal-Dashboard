@@ -1,15 +1,12 @@
 import requests
 import pandas as pd
 import numpy as np
-from datetime import datetime
-
-import requests
-import pandas as pd
 import time
+from datetime import datetime
 
 def fetch_binance_ohlcv(symbol="BTCUSDT", interval="15m", limit=150, retries=3, sleep_time=2):
     url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}"
-    
+
     for attempt in range(retries):
         try:
             response = requests.get(url, timeout=10)
@@ -34,21 +31,8 @@ def fetch_binance_ohlcv(symbol="BTCUSDT", interval="15m", limit=150, retries=3, 
             print(f"[Binance] Attempt {attempt+1} failed: {e}")
         time.sleep(sleep_time)
 
-    # Final fallback: return an empty DataFrame
     print("[Binance] All attempts failed. No data returned.")
-    return pd.DataFrame():
-    url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}"
-    data = requests.get(url).json()
-    df = pd.DataFrame(data, columns=["Open Time", "Open", "High", "Low", "Close", "Volume",
-                                     "Close Time", "Quote Asset Volume", "Trades",
-                                     "Taker Buy Base", "Taker Buy Quote", "Ignore"])
-    df["Open"] = pd.to_numeric(df["Open"])
-    df["High"] = pd.to_numeric(df["High"])
-    df["Low"] = pd.to_numeric(df["Low"])
-    df["Close"] = pd.to_numeric(df["Close"])
-    df["Volume"] = pd.to_numeric(df["Volume"])
-    df["Open Time"] = pd.to_datetime(df["Open Time"], unit="ms")
-    return df.set_index("Open Time")
+    return pd.DataFrame()
 
 def generate_signal(df):
     close = df["Close"]
