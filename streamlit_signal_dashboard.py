@@ -1,4 +1,3 @@
-# Streamlit Signal Dashboard (Fixed with Data Check)
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
